@@ -1,13 +1,20 @@
 package main
 
 import (
+	"bootdev_pokedex/internal/pokeapi"
 	"bufio"
 	"fmt"
 	"os"
 	"strings"
 )
 
-func startRepl() {
+type config struct {
+	pokeapiClient    pokeapi.Client
+	nextLocationsURL *string
+	prevLocationsURL *string
+}
+
+func startRepl(cfg *config) {
 	reader := bufio.NewScanner(os.Stdin)
 	for {
 		fmt.Print("Pokedex > ")
@@ -22,7 +29,7 @@ func startRepl() {
 
 		command, exists := getCommands()[commandName]
 		if exists {
-			err := command.callback()
+			err := command.callback(cfg)
 			if err != nil {
 				fmt.Println(err)
 			}
@@ -43,7 +50,7 @@ func cleanInput(text string) []string {
 type cliCommand struct {
 	name        string
 	description string
-	callback    func() error
+	callback    func(*config) error
 }
 
 func getCommands() map[string]cliCommand {
@@ -60,12 +67,12 @@ func getCommands() map[string]cliCommand {
 		},
 		"map": {
 			name:        "map",
-			description: "Displays 20 map areas, calling map again will display the next 20 map areas",
-			callback:    commandMap,
+			description: "Get the next page of locations",
+			callback:    commandMapf,
 		},
 		"mapb": {
 			name:        "mapb",
-			description: "Displays the 20 map areas previously shown, after calling map an extra time",
+			description: "Get the previous page of locations",
 			callback:    commandMapb,
 		},
 	}
