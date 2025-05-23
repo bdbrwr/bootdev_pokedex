@@ -1,2 +1,5 @@
 # ignore executable
 ./bootdev_pokedex
+
+# igonre logs
+repl.log
