@@ -1,11 +1,12 @@
 package main
 
 import (
-	"bootdev_pokedex/internal/pokeapi"
 	"bufio"
 	"fmt"
 	"os"
 	"strings"
+
+	"github.com/bdbrwr/bootdev_pokedex/internal/pokeapi"
 )
 
 type config struct {
