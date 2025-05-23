@@ -58,5 +58,15 @@ func getCommands() map[string]cliCommand {
 			description: "Displays the help message, explaining the Usuage",
 			callback:    commandHelp,
 		},
+		"map": {
+			name:        "map",
+			description: "Displays 20 map areas, calling map again will display the next 20 map areas",
+			callback:    commandMap,
+		},
+		"mapb": {
+			name:        "mapb",
+			description: "Displays the 20 map areas previously shown, after calling map an extra time",
+			callback:    commandMapb,
+		},
 	}
 }
